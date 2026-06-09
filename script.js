@@ -6,88 +6,88 @@ const products = [
 
 {
 id:1,
-name:"Joyroom Car Charger USB + Type-C",
-price:350,
+name:"Joyroom JR-CCN16 Car Charger",
+price:221.20,
 image:"1.jpg",
 category:"Chargers"
 },
 
 {
 id:2,
-name:"Joyroom Mini Car Charger",
-price:250,
+name:"Joyroom JR-CCN06 Car Charger",
+price:345,
 image:"2.jpg",
 category:"Chargers"
 },
 
 {
 id:3,
-name:"Oraimo Car Charger",
-price:300,
+name:"Joyroom JR-CCN05 Car Charger",
+price:340,
 image:"3.jpg",
 category:"Chargers"
 },
 
 {
 id:4,
-name:"Joyroom Car Phone Holder",
-price:300,
+name:"Joyroom JR-OK3 Car Holder",
+price:186.83,
 image:"4.jpg",
 category:"Holders"
 },
 
 {
 id:5,
-name:"Metal Desktop Phone Stand",
-price:120,
+name:"ONCHEER Phone Holder",
+price:50,
 image:"5.jpg",
 category:"Holders"
 },
 
 {
 id:6,
-name:"Flexible Mobile Holder",
-price:150,
+name:"Flexible Clip Holder",
+price:77,
 image:"6.jpg",
 category:"Holders"
 },
 
 {
 id:7,
-name:"Joyroom Fast Car Charger",
-price:220,
+name:"Oraimo OCC-73D Car Charger",
+price:299,
 image:"7.jpg",
 category:"Chargers"
 },
 
 {
 id:8,
-name:"Joyroom Power Bank",
-price:500,
+name:"Joyroom JR-PBF12 Power Bank 10000mAh",
+price:499,
 image:"8.jpg",
 category:"Power Banks"
 },
 
 {
 id:9,
-name:"WIWU Power Bank 10000mAh",
-price:350,
+name:"WiWU AT0918 Power Bank 10000mAh",
+price:299,
 image:"9.jpg",
 category:"Power Banks"
 },
 
 {
 id:10,
-name:"HIKSEMI Flash Drive 32GB",
-price:360,
+name:"HIKSEMI Flash Drive 32GB USB 3.0",
+price:362.52,
 image:"10.jpg",
 category:"Flash Drives"
 },
 
 {
 id:11,
-name:"Kingston Flash Drive 64GB",
-price:350,
+name:"HIKSEMI Flash Drive 16GB",
+price:219,
 image:"11.jpg",
 category:"Flash Drives"
 },
@@ -95,71 +95,71 @@ category:"Flash Drives"
 {
 id:12,
 name:"HIKSEMI Flash Drive 8GB",
-price:130,
+price:173,
 image:"12.jpg",
 category:"Flash Drives"
 },
 
 {
 id:13,
-name:"HIKSEMI Flash Drive 16GB",
-price:230,
+name:"Kingston DataTraveler Exodia S 64GB",
+price:320,
 image:"13.jpg",
 category:"Flash Drives"
 },
 
 {
 id:14,
-name:"Joyroom Power Bank 10000mAh",
-price:450,
+name:"Choetech Power Bank 10000mAh",
+price:624,
 image:"14.jpg",
 category:"Power Banks"
 },
 
 {
 id:15,
-name:"WIWU Power Bank",
-price:370,
+name:"Rotating Phone Holder",
+price:89,
 image:"15.jpg",
-category:"Power Banks"
+category:"Holders"
 },
 
 {
 id:16,
-name:"Choetech Power Bank 10000mAh",
-price:674,
+name:"Earldom EH161 Holder",
+price:59,
 image:"16.jpg",
-category:"Power Banks"
+category:"Holders"
 },
 
 {
 id:17,
-name:"WIWU Power Bank Premium",
-price:500,
+name:"Joyroom S-A18 3 In 1 Cable",
+price:147.65,
 image:"17.jpg",
-category:"Power Banks"
+category:"Cables"
 },
 
 {
 id:18,
-name:"45W Fast Charger",
-price:300,
+name:"WiWU P033 Power Bank 10000mAh",
+price:389.12,
 image:"18.jpg",
-category:"Chargers"
+category:"Power Banks"
 },
 
 {
 id:19,
-name:"Oraimo 20W Charger",
-price:320,
+name:"XKCZ 4 In 1 Cable",
+price:52,
 image:"19.jpg",
-category:"Chargers"
+category:"Cables"
 },
 
 {
 id:20,
-name:"45W PD Adapter",
-price:420,
+name:"45W Type-C Charger With Cable",
+price:220.50,
 image:"20.jpg",
 category:"Chargers"
 },
@@ -167,42 +167,36 @@ category:"Chargers"
 {
 id:21,
 name:"25W Type-C Charger",
-price:230,
+price:160,
 image:"21.jpg",
 category:"Chargers"
 },
 
 {
 id:22,
-name:"4 In 1 Spring Cable",
-price:170,
+name:"45W PD QC3.0 Charger",
+price:349,
 image:"22.jpg",
-category:"Cables"
+category:"Chargers"
 },
 
 {
 id:23,
-name:"Joyroom 4 In 1 Cable",
-price:250,
+name:"Joyroom Micro USB Cable",
+price:72,
 image:"23.jpg",
 category:"Cables"
 },
 
 {
 id:24,
-name:"Joyroom Micro USB Cable",
-price:130,
+name:"4 In 1 Spring Cable 65W",
+price:99,
 image:"24.jpg",
 category:"Cables"
-},
-
-{
-id:25,
-name:"PD 27W Max Fast Charging Cable",
-price:180,
-image:"25.jpg",
-category:"Cables"
 }
+
+];
 
 ];
 /* عرض المنتجات */
