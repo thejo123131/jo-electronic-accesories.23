@@ -521,9 +521,7 @@ document.body.classList.add(
 );
 
 }
-/* تشغيل المنتجات تلقائياً عند فتح الموقع */
-
-document.addEventListener("DOMContentLoaded", function () {
+/* تشغيل المنتجات تلقائياً عند فتح الموقع *
 
 displayProducts(products);
 
