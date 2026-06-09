@@ -195,8 +195,9 @@ price:99,
 image:"24.jpg",
 category:"Cables"
 }
-
+    
 ];
+/* عرض المنتجات */
 /* عرض المنتجات */
 
 function displayProducts(list = products){
