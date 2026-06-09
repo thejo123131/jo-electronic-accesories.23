@@ -23,6 +23,13 @@ category:"Chargers"
 {
 id:3,
 name:"Oraimo Car Charger",
+  /* تشغيل المنتجات تلقائياً عند فتح الموقع */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+displayProducts(products);
+
+});
 price:300,
 image:"3.jpg",
 category:"Chargers"
