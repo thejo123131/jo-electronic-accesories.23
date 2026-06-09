@@ -7,203 +7,142 @@ const products = [
 {
 id:1,
 name:"Joyroom Car Charger USB + Type-C",
-price:350,
-image:"1.jpg",
-category:"Chargers"
+image:"1.jpg"
 },
 
 {
 id:2,
 name:"Joyroom Mini Car Charger",
-price:250,
-image:"2.jpg",
-category:"Chargers"
+image:"2.jpg"
 },
 
 {
 id:3,
 name:"Oraimo Car Charger",
-price:300,
-image:"3.jpg",
-category:"Chargers"
+image:"3.jpg"
 },
 
 {
 id:4,
 name:"Joyroom Car Phone Holder",
-price:300,
-image:"4.jpg",
-category:"Holders"
+image:"4.jpg"
 },
 
 {
 id:5,
 name:"Metal Desktop Phone Stand",
-price:120,
-image:"5.jpg",
-category:"Holders"
+image:"5.jpg"
 },
 
 {
 id:6,
 name:"Flexible Mobile Holder",
-price:150,
-image:"6.jpg",
-category:"Holders"
+image:"6.jpg"
 },
 
 {
 id:7,
 name:"Joyroom Fast Car Charger",
-price:220,
-image:"7.jpg",
-category:"Chargers"
+image:"7.jpg"
 },
 
 {
 id:8,
 name:"Joyroom Power Bank",
-price:500,
-image:"8.jpg",
-category:"Power Banks"
+image:"8.jpg"
 },
 
 {
 id:9,
 name:"WIWU Power Bank 10000mAh",
-price:350,
-image:"9.jpg",
-category:"Power Banks"
+image:"9.jpg"
 },
 
 {
 id:10,
 name:"HIKSEMI Flash Drive 32GB",
-price:360,
-image:"10.jpg",
-category:"Flash Drives"
+image:"21.jpg"
 },
 
 {
 id:11,
-name:"Kingston Flash Drive 64GB",
-price:350,
-image:"11.jpg",
-category:"Flash Drives"
+name:"HIKSEMI Flash Drive 16GB",
+image:"11.jpg"
 },
 
 {
 id:12,
 name:"HIKSEMI Flash Drive 8GB",
-price:130,
-image:"12.jpg",
-category:"Flash Drives"
+image:"12.jpg"
 },
 
 {
 id:13,
-name:"HIKSEMI Flash Drive 16GB",
-price:230,
-image:"13.jpg",
-category:"Flash Drives"
+name:"Kingston Flash Drive 64GB",
+image:"13.jpg"
 },
 
 {
 id:14,
 name:"Joyroom Power Bank 10000mAh",
-price:450,
-image:"14.jpg",
-category:"Power Banks"
+image:"14.jpg"
 },
 
 {
 id:15,
-name:"WIWU Power Bank",
-price:370,
-image:"15.jpg",
-category:"Power Banks"
+name:"WIWU Laptop Stand",
+image:"15.jpg"
 },
 
 {
 id:16,
-name:"Choetech Power Bank 10000mAh",
-price:674,
-image:"16.jpg",
-category:"Power Banks"
+name:"Adjustable Desktop Phone Stand",
+image:"16.jpg"
 },
 
 {
 id:17,
-name:"WIWU Power Bank Premium",
-price:500,
-image:"17.jpg",
-category:"Power Banks"
+name:"45W Fast Charger With Type-C Cable",
+image:"17.jpg"
 },
 
 {
 id:18,
-name:"45W Fast Charger",
-price:300,
-image:"18.jpg",
-category:"Chargers"
+name:"45W PD/QC3.0 Dual USB + Type-C Fast Charger",
+image:"18.jpg"
 },
 
-{
-id:19,
-name:"Oraimo 20W Charger",
-price:320,
-image:"19.jpg",
-category:"Chargers"
-},
+// احذف المنتج 19 بالكامل
 
 {
 id:20,
-name:"45W PD Adapter",
-price:420,
-image:"20.jpg",
-category:"Chargers"
-},
-
-{
-id:21,
 name:"25W Type-C Charger",
-price:230,
-image:"21.jpg",
-category:"Chargers"
+image:"20.jpg"
 },
 
 {
 id:22,
-name:"4 In 1 Spring Cable",
-price:170,
-image:"22.jpg",
-category:"Cables"
+name:"4 In 1 USB-C Fast Charging Spring Cable 65W",
+image:"22.jpg"
 },
 
 {
 id:23,
-name:"Joyroom 4 In 1 Cable",
-price:250,
-image:"23.jpg",
-category:"Cables"
+name:"Joyroom Type-C Cable",
+image:"23.jpg"
 },
 
 {
 id:24,
-name:"Joyroom Micro USB Cable",
-price:130,
-image:"24.jpg",
-category:"Cables"
+name:"Joyroom 4 In 1 Cable",
+image:"24.jpg"
 },
 
 {
 id:25,
-name:"PD 27W Max Fast Charging Cable",
-price:180,
-image:"25.jpg",
-category:"Cables"
+name:"4 In 1 Fast Charging Cable 65W",
+image:"25.jpg"
 }
-
 ];
 /* عرض المنتجات */
 
