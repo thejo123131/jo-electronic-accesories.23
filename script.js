@@ -195,9 +195,8 @@ price:99,
 image:"24.jpg",
 category:"Cables"
 }
-    
+
 ];
-/* عرض المنتجات */
 /* عرض المنتجات */
 
 function displayProducts(list = products){
@@ -522,29 +521,19 @@ document.body.classList.add(
 async function sendOrder(){
 
 const name =
-document.getElementById(
-"customerName"
-).value;
+document.getElementById("customerName").value;
 
 const email =
-document.getElementById(
-"customerEmail"
-).value;
+document.getElementById("customerEmail").value;
 
 const phone =
-document.getElementById(
-"customerPhone"
-).value;
+document.getElementById("customerPhone").value;
 
 const address =
-document.getElementById(
-"customerAddress"
-).value;
+document.getElementById("customerAddress").value;
 
 const payment =
-document.getElementById(
-"paymentMethod"
-).value;
+document.getElementById("paymentMethod").value;
 
 if(
 !name ||
@@ -553,9 +542,7 @@ if(
 !address
 ){
 
-alert(
-"Please fill all fields"
-);
+alert("Please fill all fields");
 
 return;
 
@@ -581,7 +568,7 @@ const delivery = 70;
 
 const cashFee =
 payment === "Cash On Delivery"
-? 15
+? 12
 : 0;
 
 const total =
@@ -598,26 +585,19 @@ method:"POST",
 
 headers:{
 "Content-Type":"application/json",
-"apikey":"sb_publishable_SHJBzoX8F4ahjDtoW_G9ng_C4mF6txi",
-"Authorization":"Bearer sb_publishable_SHJBzoX8F4ahjDtoW_G9ng_C4mF6txi"
+"apikey":"YOUR_SUPABASE_API_KEY",
+"Authorization":"Bearer YOUR_SUPABASE_API_KEY"
 },
 
 body:JSON.stringify({
 
 customer_name:name,
-
 customer_email:email,
-
 customer_phone:phone,
-
 customer_address:address,
-
 payment_method:payment,
-
 products:orderDetails,
-
 total:total,
-
 status:"pending"
 
 })
@@ -651,7 +631,6 @@ Cash Fee: ${cashFee} EGP
 Final Total: ${total} EGP`;
 
 const whatsappURL =
-
 `https://wa.me/201013693032?text=${encodeURIComponent(message)}`;
 
 window.open(
@@ -669,17 +648,10 @@ Waiting For Admin Confirmation`
 
 }
 
-/* تشغيل المنتجات تلقائياً */
+/* تشغيل الموقع */
 
 window.onload = function(){
 
 displayProducts(products);
-
-};
-/* تشغيل المنتجات تلقائياً */
-
-window.onload = function () {
-
-    displayProducts(products);
 
 };
