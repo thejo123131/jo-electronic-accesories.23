@@ -197,8 +197,6 @@ category:"Cables"
 }
 
 ];
-
-];
 /* عرض المنتجات */
 
 function displayProducts(list = products){
