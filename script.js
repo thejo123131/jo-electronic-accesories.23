@@ -521,17 +521,3 @@ document.body.classList.add(
 );
 
 }
-/* تشغيل المنتجات تلقائياً عند فتح الموقع *
-
-displayProducts(products);
-
-});
-if(theme === "rgb"){
-
-document.body.classList.add(
-"rgb-theme"
-);
-
-}
-
-}
