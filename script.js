@@ -521,7 +521,13 @@ document.body.classList.add(
 );
 
 }
+/* تشغيل المنتجات تلقائياً عند فتح الموقع */
 
+document.addEventListener("DOMContentLoaded", function () {
+
+displayProducts(products);
+
+});
 if(theme === "rgb"){
 
 document.body.classList.add(
