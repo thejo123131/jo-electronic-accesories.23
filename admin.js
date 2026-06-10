@@ -92,7 +92,7 @@ return;
 
 const order = orderData[0];
 
-await emailjs.send(
+const response = await emailjs.send(
 "service_d4eyvig",
 "template_7xn81bb",
 {
@@ -104,6 +104,8 @@ products: order.products,
 total: order.total
 }
 );
+
+console.log("EMAIL SUCCESS:", response);
 
 alert("Confirmation Email Sent");
 
@@ -122,8 +124,13 @@ loadOrders();
 
 }catch(error){
 
-console.log(error);
-alert("Email Send Error");
+console.log("EMAIL ERROR:", error);
+
+alert(
+error?.text ||
+error?.message ||
+JSON.stringify(error)
+);
 
 }
 
@@ -154,7 +161,7 @@ return;
 
 const order = orderData[0];
 
-await emailjs.send(
+const response = await emailjs.send(
 "service_d4eyvig",
 "template_9lhv397",
 {
@@ -162,6 +169,8 @@ customer_name: order.customer_name,
 customer_email: order.customer_email
 }
 );
+
+console.log("EMAIL SUCCESS:", response);
 
 await fetch(
 `${SUPABASE_URL}/rest/v1/orders?id=eq.${id}`,
@@ -180,8 +189,13 @@ loadOrders();
 
 }catch(error){
 
-console.log(error);
-alert("Delete Error");
+console.log("EMAIL ERROR:", error);
+
+alert(
+error?.text ||
+error?.message ||
+JSON.stringify(error)
+);
 
 }
 
