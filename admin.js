@@ -11,11 +11,11 @@ loadOrders();
 async function loadOrders() {
 
 const res = await fetch(
-"${SUPABASE_URL}/rest/v1/orders?select=*&order=id.desc",
+`${SUPABASE_URL}/rest/v1/orders?select=*&order=id.desc`,
 {
 headers:{
 apikey: API_KEY,
-Authorization: "Bearer ${API_KEY}"
+Authorization: `Bearer ${API_KEY}`
 }
 }
 );
@@ -31,7 +31,19 @@ orders.forEach(order => {
 
 container.innerHTML += `
 
-<div class="order"><h3>${order.customer_name}</h3><p>${order.customer_phone}</p><p>${order.customer_address}</p><p>${order.products}</p><p>${order.total} EGP</p><button
+<div class="order">
+
+<h3>${order.customer_name}</h3>
+
+<p>${order.customer_phone}</p>
+
+<p>${order.customer_address}</p>
+
+<p>${order.products}</p>
+
+<p>${order.total} EGP</p>
+
+<button
 class="confirm"
 onclick="confirmOrder(${order.id})">
 Confirm
@@ -43,7 +55,9 @@ onclick="deleteOrder(${order.id})">
 Delete
 </button>
 
-</div>`;
+</div>
+
+`;
 
 });
 
@@ -54,11 +68,11 @@ async function confirmOrder(id){
 try{
 
 const orderRes = await fetch(
-"${SUPABASE_URL}/rest/v1/orders?id=eq.${id}&select=*",
+`${SUPABASE_URL}/rest/v1/orders?id=eq.${id}&select=*`,
 {
 headers:{
 apikey: API_KEY,
-Authorization:"Bearer ${API_KEY}"
+Authorization:`Bearer ${API_KEY}`
 }
 }
 );
@@ -97,11 +111,11 @@ if(!confirm("Delete this order?")) return;
 try{
 
 const orderRes = await fetch(
-"${SUPABASE_URL}/rest/v1/orders?id=eq.${id}&select=*",
+`${SUPABASE_URL}/rest/v1/orders?id=eq.${id}&select=*`,
 {
 headers:{
 apikey: API_KEY,
-Authorization:"Bearer ${API_KEY}"
+Authorization:`Bearer ${API_KEY}`
 }
 }
 );
@@ -120,12 +134,12 @@ customer_email: order.customer_email
 );
 
 await fetch(
-"${SUPABASE_URL}/rest/v1/orders?id=eq.${id}",
+`${SUPABASE_URL}/rest/v1/orders?id=eq.${id}`,
 {
 method:"DELETE",
 headers:{
 apikey: API_KEY,
-Authorization:"Bearer ${API_KEY}"
+Authorization:`Bearer ${API_KEY}`
 }
 }
 );
