@@ -580,31 +580,16 @@ status:"pending"
 );
 
 /* إرسال Email */
-emailjs.send(
-"service_d4eyvig",
-"template_7xn81bb",
-{
-customer_name:"Test",
-customer_email:"test@test.com",
-customer_phone:"123",
-customer_address:"Test",
-payment_method:"Cash",
-products:"Test Product",
-total:"100"
-}
-)
-.then(res => console.log(res))
-.catch(err => console.log(err));
+
 await emailjs.send(
 "service_d4eyvig",
 "template_9lhv397",
 {
-customer_name: order.customer_name,
-customer_email: order.customer_email,
-total: order.total
+customer_name: name,
+customer_email: email,
+total: total
 }
 );
-
 alert(
 `✅ Order Sent
 
@@ -622,11 +607,18 @@ document.getElementById(
 ).style.display = "none";
 
 }catch(error){
+
 console.log(error);
-alert("Error: " + JSON.stringify(error));
-}
+
+alert(
+error.text ||
+error.message ||
+JSON.stringify(error)
+);
 
 }
+
+} // <-- دي قفلة الدالة sendOrder
 
 /* تشغيل الموقع */
 
