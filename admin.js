@@ -41,7 +41,7 @@ container.innerHTML += `
 
 <p>${order.total} EGP</p>
 
-<p>Status: ${order.status}</p>
+<p>Status: ${order.status || "pending"}</p>
 
 <button
 class="confirm"
