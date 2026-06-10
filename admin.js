@@ -9,7 +9,7 @@ emailjs.init("QT7Y3j-Cx9P0acoWL");
 loadOrders();
 
 /* =========================
-   LOAD ORDERS (FINAL FIX)
+   LOAD ORDERS
 ========================= */
 
 async function loadOrders() {
@@ -59,11 +59,13 @@ async function loadOrders() {
           <p>${order.products}</p>
           <p>${order.total} EGP</p>
 
-          <button class="confirm" onclick="confirmOrder(${Number(order.id)}, this)">
+          <button class="confirm"
+            onclick="confirmOrder(${Number(order.id)}, this)">
             Confirm
           </button>
 
-          <button class="delete" onclick="deleteOrder(${Number(order.id)}, this)">
+          <button class="delete"
+            onclick="deleteOrder(${Number(order.id)}, this)">
             Delete
           </button>
         </div>
@@ -74,15 +76,12 @@ async function loadOrders() {
     console.log("❌ LOAD ERROR:", error);
 
     const container = document.getElementById("orders");
+
     if (container) {
       container.innerHTML =
         `<p style="color:red;">Failed to load orders</p>`;
-    }
-  }
-}
-
-/* =========================
-   CONFIRM ORDER (SAFE VERSION)
+    }/* =========================
+   CONFIRM ORDER
 ========================= */
 
 async function confirmOrder(id, btn) {
@@ -114,7 +113,6 @@ async function confirmOrder(id, btn) {
       return;
     }
 
-    // 🔥 SEND EMAIL
     const response = await emailjs.send(
       "service_d4eyvig",
       "template_7xn81bb",
@@ -130,15 +128,11 @@ async function confirmOrder(id, btn) {
 
     console.log("EMAIL SUCCESS:", response);
 
-    // ✅ تأكيد نجاح فعلي
     if (!response || response.status !== 200) {
       throw new Error("Email failed to send");
     }
 
-    alert("Confirmation Email Sent ✅");
-
-    // 🔥 delete ONLY after success
-    await fetch(
+    const deleteRes = await fetch(
       `${SUPABASE_URL}/rest/v1/orders?id=eq.${id}`,
       {
         method: "DELETE",
@@ -149,19 +143,32 @@ async function confirmOrder(id, btn) {
       }
     );
 
+    console.log("DELETE STATUS:", deleteRes.status);
+
+    if (!deleteRes.ok) {
+      const errorText = await deleteRes.text();
+      console.log("DELETE ERROR:", errorText);
+      alert("Delete failed");
+      return;
+    }
+
+    alert("Order Confirmed & Deleted ✅");
+
     loadOrders();
 
   } catch (error) {
     console.log("EMAIL ERROR:", error);
-    alert("Failed to send email ❌ Order NOT deleted");
+    alert(
+      error?.message ||
+      JSON.stringify(error)
+    );
 
   } finally {
     btn.disabled = false;
     btn.innerText = "Confirm";
   }
 }
-
-/* =========================
+    /* =========================
    DELETE ORDER
 ========================= */
 
@@ -193,19 +200,25 @@ async function deleteOrder(id, btn) {
 
     const order = orderData[0];
 
-    // optional email (safe)
+    // إرسال إيميل الرفض (اختياري)
     if (order.customer_email) {
-      await emailjs.send(
-        "service_d4eyvig",
-        "template_9lhv397",
-        {
-          customer_name: order.customer_name,
-          customer_email: order.customer_email
-        }
-      );
+      try {
+        await emailjs.send(
+          "service_d4eyvig",
+          "template_9lhv397",
+          {
+            customer_name: order.customer_name,
+            customer_email: order.customer_email
+          }
+        );
+
+        console.log("REJECTION EMAIL SENT");
+      } catch (emailError) {
+        console.log("EMAIL FAILED:", emailError);
+      }
     }
 
-    await fetch(
+    const deleteRes = await fetch(
       `${SUPABASE_URL}/rest/v1/orders?id=eq.${id}`,
       {
         method: "DELETE",
@@ -216,18 +229,33 @@ async function deleteOrder(id, btn) {
       }
     );
 
-    alert("Order Deleted");
+    console.log("DELETE STATUS:", deleteRes.status);
+
+    if (!deleteRes.ok) {
+      const errorText = await deleteRes.text();
+      console.log("DELETE ERROR:", errorText);
+      alert("Delete failed");
+      return;
+    }
+
+    alert("Order Deleted ✅");
 
     loadOrders();
 
   } catch (error) {
     console.log("DELETE ERROR:", error);
-    alert(error?.message || JSON.stringify(error));
+
+    alert(
+      error?.message ||
+      JSON.stringify(error)
+    );
 
   } finally {
     if (btn) {
       btn.disabled = false;
       btn.innerText = "Delete";
     }
+  }
+}
   }
 }
