@@ -582,8 +582,8 @@ status:"pending"
 /* إرسال Email */
 
 await emailjs.send(
-"Service_d4eyvig",
-"Tempelate_7xn81bb",
+"service_d4eyvig",
+"template_7xn81bb",
 {
 customer_name:name,
 customer_email:email,
