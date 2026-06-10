@@ -585,13 +585,13 @@ await emailjs.send(
 "service_d4eyvig",
 "template_7xn81bb",
 {
-customer_name: order.customer_name,
-customer_email: order.customer_email,
-customer_phone: order.customer_phone,
-customer_address: order.customer_address,
-payment_method: order.payment_method,
-products: order.products,
-total: order.total
+customer_name: name,
+customer_email: email,
+customer_phone: phone,
+customer_address: address,
+payment_method: payment,
+products: orderDetails,
+total: total
 }
 );
 
