@@ -197,6 +197,7 @@ category:"Cables"
 }
 
 ];
+
 /* عرض المنتجات */
 
 function displayProducts(list = products){
@@ -212,8 +213,7 @@ container.innerHTML += `
 
 <div class="product-card">
 
-<img src="${product.image}"
-alt="${product.name}">
+<img src="${product.image}" alt="${product.name}">
 
 <h3>${product.name}</h3>
 
@@ -221,16 +221,14 @@ alt="${product.name}">
 
 <div class="product-buttons">
 
-<button
-class="order-btn"
+<button class="order-btn"
 onclick="orderNow(${product.id})">
 
 Order Now
 
 </button>
 
-<button
-class="add-btn"
+<button class="add-btn"
 onclick="addToCart(${product.id})">
 
 Add To Cart
@@ -259,7 +257,6 @@ p => p.category === category
 displayProducts(filtered);
 
 }
-
 /* إضافة للسلة */
 
 function addToCart(id){
@@ -281,11 +278,8 @@ p => p.id === id
 );
 
 cart.push({
-
 ...product,
-
 quantity:1
-
 });
 
 }
@@ -353,7 +347,6 @@ const cartTotal =
 document.getElementById("cart-total");
 
 let total = 0;
-
 let count = 0;
 
 cartItems.innerHTML = "";
@@ -372,32 +365,20 @@ cartItems.innerHTML += `
 
 <div class="cart-item">
 
-<strong>
-${item.name}
-</strong>
+<strong>${item.name}</strong>
 
-<p>
-${item.price + 50} EGP
-</p>
+<p>${item.price + 50} EGP</p>
 
 <div class="qty-controls">
 
-<button
-onclick="decreaseQuantity(${item.id})">
-
+<button onclick="decreaseQuantity(${item.id})">
 -
-
 </button>
 
-<span>
-${item.quantity}
-</span>
+<span>${item.quantity}</span>
 
-<button
-onclick="increaseQuantity(${item.id})">
-
+<button onclick="increaseQuantity(${item.id})">
 +
-
 </button>
 
 </div>
@@ -408,13 +389,11 @@ onclick="increaseQuantity(${item.id})">
 
 });
 
-cartCount.innerText =
-count;
-
-cartTotal.innerText =
-total;
+cartCount.innerText = count;
+cartTotal.innerText = total;
 
 }
+
 /* شراء مباشر */
 
 function orderNow(id){
@@ -497,25 +476,18 @@ document.body.classList.remove(
 );
 
 if(theme==="white"){
-document.body.classList.add(
-"white-theme"
-);
+document.body.classList.add("white-theme");
 }
 
 if(theme==="black"){
-document.body.classList.add(
-"black-theme"
-);
+document.body.classList.add("black-theme");
 }
 
 if(theme==="rgb"){
-document.body.classList.add(
-"rgb-theme"
-);
+document.body.classList.add("rgb-theme");
 }
 
 }
-
 /* إرسال الطلب */
 
 async function sendOrder(){
@@ -576,6 +548,8 @@ productsTotal +
 delivery +
 cashFee;
 
+try{
+
 /* حفظ الطلب في Supabase */
 
 await fetch(
@@ -585,8 +559,8 @@ method:"POST",
 
 headers:{
 "Content-Type":"application/json",
-"apikey":"YOUR_SUPABASE_API_KEY",
-"Authorization":"Bearer YOUR_SUPABASE_API_KEY"
+"apikey":"sb_publishable_SHJBzoX8F4ahjDtoW_G9ng_C4mF6txi",
+"Authorization":"Bearer sb_publishable_SHJBzoX8F4ahjDtoW_G9ng_C4mF6txi"
 },
 
 body:JSON.stringify({
@@ -605,37 +579,20 @@ status:"pending"
 }
 );
 
-const message =
+/* إرسال Email */
 
-`🛒 New Order
-
-Name: ${name}
-
-Email: ${email}
-
-Phone: ${phone}
-
-Address: ${address}
-
-Payment Method: ${payment}
-
-Products:
-${orderDetails}
-
-Products Total: ${productsTotal} EGP
-
-Delivery: ${delivery} EGP
-
-Cash Fee: ${cashFee} EGP
-
-Final Total: ${total} EGP`;
-
-const whatsappURL =
-`https://wa.me/201013693032?text=${encodeURIComponent(message)}`;
-
-window.open(
-whatsappURL,
-"_blank"
+await emailjs.send(
+"Service_d4eyvig",
+"Tempelate_7xn81bb",
+{
+customer_name:name,
+customer_email:email,
+customer_phone:phone,
+customer_address:address,
+payment_method:payment,
+products:orderDetails,
+total:total
+}
 );
 
 alert(
@@ -645,6 +602,24 @@ Total: ${total} EGP
 
 Waiting For Admin Confirmation`
 );
+
+cart = [];
+
+updateCart();
+
+document.getElementById(
+"orderModal"
+).style.display = "none";
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"❌ Error Sending Order"
+);
+
+}
 
 }
 
