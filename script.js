@@ -597,15 +597,11 @@ total:"100"
 .catch(err => console.log(err));
 await emailjs.send(
 "service_d4eyvig",
-"template_7xn81bb",
+"template_9lhv397",
 {
-customer_name:name,
-customer_email:email,
-customer_phone:phone,
-customer_address:address,
-payment_method:payment,
-products:orderDetails,
-total:total
+customer_name: order.customer_name,
+customer_email: order.customer_email,
+total: order.total
 }
 );
 
