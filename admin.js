@@ -9,11 +9,13 @@ emailjs.init("QT7Y3j-Cx9P0acoWL");
 loadOrders();
 
 /* =========================
-   LOAD ORDERS
+   LOAD ORDERS (FIXED)
 ========================= */
 
 async function loadOrders() {
   try {
+    console.log("🔄 Loading orders...");
+
     const res = await fetch(
       `${SUPABASE_URL}/rest/v1/orders?select=*&order=id.desc`,
       {
@@ -24,10 +26,29 @@ async function loadOrders() {
       }
     );
 
+    console.log("📡 Status:", res.status);
+
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(errText);
+    }
+
     const orders = await res.json();
 
+    console.log("📦 Orders:", orders);
+
     const container = document.getElementById("orders");
+
+    if (!container) {
+      throw new Error("Orders container not found in HTML");
+    }
+
     container.innerHTML = "";
+
+    if (!orders.length) {
+      container.innerHTML = "<p>No orders found</p>";
+      return;
+    }
 
     orders.forEach(order => {
       container.innerHTML += `
@@ -38,11 +59,11 @@ async function loadOrders() {
           <p>${order.products}</p>
           <p>${order.total} EGP</p>
 
-          <button class="confirm" onclick="confirmOrder(${order.id})">
+          <button class="confirm" onclick="confirmOrder(${Number(order.id)})">
             Confirm
           </button>
 
-          <button class="delete" onclick="deleteOrder(${order.id})">
+          <button class="delete" onclick="deleteOrder(${Number(order.id)})">
             Delete
           </button>
         </div>
@@ -50,7 +71,10 @@ async function loadOrders() {
     });
 
   } catch (error) {
-    console.log("LOAD ERROR:", error);
+    console.log("❌ LOAD ERROR:", error);
+
+    document.getElementById("orders").innerHTML =
+      `<p style="color:red;">Failed to load orders</p>`;
   }
 }
 
@@ -84,7 +108,6 @@ async function confirmOrder(id) {
       return;
     }
 
-    // 🔥 SEND EMAIL
     const response = await emailjs.send(
       "service_d4eyvig",
       "template_7xn81bb",
@@ -102,7 +125,6 @@ async function confirmOrder(id) {
 
     alert("Confirmation Email Sent");
 
-    // 🔥 DELETE AFTER SUCCESS ONLY
     await fetch(
       `${SUPABASE_URL}/rest/v1/orders?id=eq.${id}`,
       {
@@ -118,12 +140,7 @@ async function confirmOrder(id) {
 
   } catch (error) {
     console.log("EMAIL ERROR:", error);
-
-    alert(
-      error?.text ||
-      error?.message ||
-      JSON.stringify(error)
-    );
+    alert(error?.message || JSON.stringify(error));
   }
 }
 
@@ -154,4 +171,32 @@ async function deleteOrder(id) {
 
     const order = orderData[0];
 
-    // optional
+    await emailjs.send(
+      "service_d4eyvig",
+      "template_9lhv397",
+      {
+        customer_name: order.customer_name,
+        customer_email: order.customer_email
+      }
+    );
+
+    await fetch(
+      `${SUPABASE_URL}/rest/v1/orders?id=eq.${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          apikey: API_KEY,
+          Authorization: `Bearer ${API_KEY}`
+        }
+      }
+    );
+
+    alert("Order Deleted");
+
+    loadOrders();
+
+  } catch (error) {
+    console.log("EMAIL ERROR:", error);
+    alert(error?.message || JSON.stringify(error));
+  }
+}
