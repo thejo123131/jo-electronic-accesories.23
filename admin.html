@@ -2,29 +2,32 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel</title>
 
-<link rel="stylesheet" href="admin.css">
-
+  <link rel="stylesheet" href="admin.css" />
 </head>
 
 <body>
 
-<h1>Orders Dashboard</h1>
+  <h1>Orders Dashboard</h1>
 
-<div id="orders">
-Loading Orders...
-</div>
+  <!-- 🔥 Status message -->
+  <p id="status">Loading orders...</p>
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- 🔥 Orders container -->
+  <div id="orders"></div>
 
-<script>
-emailjs.init("QT7Y3j-Cx9P0acoWL");
-</script>
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-<script src="admin.js"></script>
+  <script>
+    emailjs.init("QT7Y3j-Cx9P0acoWL");
+  </script>
+
+  <!-- JS file -->
+  <script src="admin.js"></script>
 
 </body>
 </html>
