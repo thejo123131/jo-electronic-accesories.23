@@ -612,13 +612,8 @@ document.getElementById(
 ).style.display = "none";
 
 }catch(error){
-
-console.error(error);
-
-alert(
-"❌ Error Sending Order"
-);
-
+console.log(error);
+alert("Error: " + JSON.stringify(error));
 }
 
 }
