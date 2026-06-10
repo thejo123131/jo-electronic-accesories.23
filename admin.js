@@ -8,27 +8,17 @@ loadOrders();
 
 async function loadOrders(){
 
-const res =
-await fetch(
-
-`${SUPABASE_URL}/rest/v1/orders?select=*`,
-
+const res = await fetch(
+"${SUPABASE_URL}/rest/v1/orders?select=*&order=id.desc",
 {
 headers:{
-
-apikey:API_KEY,
-
-Authorization:
-`Bearer ${API_KEY}`
-
+apikey: API_KEY,
+Authorization: "Bearer ${API_KEY}"
 }
-
 }
-
 );
 
-const orders =
-await res.json();
+const orders = await res.json();
 
 const container =
 document.getElementById("orders");
@@ -39,59 +29,60 @@ orders.forEach(order=>{
 
 container.innerHTML += `
 
-<div class="order">
-
-<h3>
-
-${order.customer_name}
-
-</h3>
-
-<p>
-
-${order.customer_phone}
-
-</p>
-
-<p>
-
-${order.customer_address}
-
-</p>
-
-<p>
-
-${order.total} EGP
-
-</p>
-
-<p>
-
-Status:
-${order.status}
-
-</p>
-
-<button
+<div class="order"><h3>${order.customer_name}</h3><p>${order.customer_phone}</p><p>${order.customer_address}</p><p>${order.products}</p><p>${order.total} EGP</p><p>Status: ${order.status}</p><button
 class="confirm"
 onclick="confirmOrder(${order.id})">
-
 Confirm
-
 </button>
 
 <button
 class="delete"
 onclick="deleteOrder(${order.id})">
-
 Delete
-
 </button>
 
-</div>
-
-`;
+</div>`;
 
 });
+
+}
+
+async function confirmOrder(id){
+
+await fetch(
+"${SUPABASE_URL}/rest/v1/orders?id=eq.${id}",
+{
+method:"PATCH",
+headers:{
+"Content-Type":"application/json",
+apikey: API_KEY,
+Authorization:"Bearer ${API_KEY}"
+},
+body:JSON.stringify({
+status:"confirmed"
+})
+}
+);
+
+loadOrders();
+
+}
+
+async function deleteOrder(id){
+
+if(!confirm("Delete this order?")) return;
+
+await fetch(
+"${SUPABASE_URL}/rest/v1/orders?id=eq.${id}",
+{
+method:"DELETE",
+headers:{
+apikey: API_KEY,
+Authorization:"Bearer ${API_KEY}"
+}
+}
+);
+
+loadOrders();
 
 }
