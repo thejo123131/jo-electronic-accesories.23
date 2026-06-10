@@ -9,7 +9,7 @@ emailjs.init("QT7Y3j-Cx9P0acoWL");
 loadOrders();
 
 /* =========================
-   LOAD ORDERS (FIXED)
+   LOAD ORDERS (FINAL FIX)
 ========================= */
 
 async function loadOrders() {
@@ -28,6 +28,12 @@ async function loadOrders() {
 
     console.log("📡 Status:", res.status);
 
+    const container = document.getElementById("orders");
+
+    if (!container) {
+      throw new Error("Orders container not found in HTML");
+    }
+
     if (!res.ok) {
       const errText = await res.text();
       throw new Error(errText);
@@ -36,12 +42,6 @@ async function loadOrders() {
     const orders = await res.json();
 
     console.log("📦 Orders:", orders);
-
-    const container = document.getElementById("orders");
-
-    if (!container) {
-      throw new Error("Orders container not found in HTML");
-    }
 
     container.innerHTML = "";
 
@@ -59,11 +59,11 @@ async function loadOrders() {
           <p>${order.products}</p>
           <p>${order.total} EGP</p>
 
-          <button class="confirm" onclick="confirmOrder(${Number(order.id)})">
+          <button class="confirm" onclick="confirmOrder(${Number(order.id)}, this)">
             Confirm
           </button>
 
-          <button class="delete" onclick="deleteOrder(${Number(order.id)})">
+          <button class="delete" onclick="deleteOrder(${Number(order.id)}, this)">
             Delete
           </button>
         </div>
@@ -73,17 +73,23 @@ async function loadOrders() {
   } catch (error) {
     console.log("❌ LOAD ERROR:", error);
 
-    document.getElementById("orders").innerHTML =
-      `<p style="color:red;">Failed to load orders</p>`;
+    const container = document.getElementById("orders");
+    if (container) {
+      container.innerHTML =
+        `<p style="color:red;">Failed to load orders</p>`;
+    }
   }
 }
 
 /* =========================
-   CONFIRM ORDER + EMAIL
+   CONFIRM ORDER (SAFE VERSION)
 ========================= */
 
-async function confirmOrder(id) {
+async function confirmOrder(id, btn) {
   try {
+    btn.disabled = true;
+    btn.innerText = "Sending...";
+
     const orderRes = await fetch(
       `${SUPABASE_URL}/rest/v1/orders?id=eq.${id}&select=*`,
       {
@@ -108,6 +114,7 @@ async function confirmOrder(id) {
       return;
     }
 
+    // 🔥 SEND EMAIL
     const response = await emailjs.send(
       "service_d4eyvig",
       "template_7xn81bb",
@@ -123,8 +130,14 @@ async function confirmOrder(id) {
 
     console.log("EMAIL SUCCESS:", response);
 
-    alert("Confirmation Email Sent");
+    // ✅ تأكيد نجاح فعلي
+    if (!response || response.status !== 200) {
+      throw new Error("Email failed to send");
+    }
 
+    alert("Confirmation Email Sent ✅");
+
+    // 🔥 delete ONLY after success
     await fetch(
       `${SUPABASE_URL}/rest/v1/orders?id=eq.${id}`,
       {
@@ -140,7 +153,11 @@ async function confirmOrder(id) {
 
   } catch (error) {
     console.log("EMAIL ERROR:", error);
-    alert(error?.message || JSON.stringify(error));
+    alert("Failed to send email ❌ Order NOT deleted");
+
+  } finally {
+    btn.disabled = false;
+    btn.innerText = "Confirm";
   }
 }
 
@@ -148,10 +165,15 @@ async function confirmOrder(id) {
    DELETE ORDER
 ========================= */
 
-async function deleteOrder(id) {
+async function deleteOrder(id, btn) {
   if (!confirm("Delete this order?")) return;
 
   try {
+    if (btn) {
+      btn.disabled = true;
+      btn.innerText = "Deleting...";
+    }
+
     const orderRes = await fetch(
       `${SUPABASE_URL}/rest/v1/orders?id=eq.${id}&select=*`,
       {
@@ -171,14 +193,17 @@ async function deleteOrder(id) {
 
     const order = orderData[0];
 
-    await emailjs.send(
-      "service_d4eyvig",
-      "template_9lhv397",
-      {
-        customer_name: order.customer_name,
-        customer_email: order.customer_email
-      }
-    );
+    // optional email (safe)
+    if (order.customer_email) {
+      await emailjs.send(
+        "service_d4eyvig",
+        "template_9lhv397",
+        {
+          customer_name: order.customer_name,
+          customer_email: order.customer_email
+        }
+      );
+    }
 
     await fetch(
       `${SUPABASE_URL}/rest/v1/orders?id=eq.${id}`,
@@ -196,7 +221,13 @@ async function deleteOrder(id) {
     loadOrders();
 
   } catch (error) {
-    console.log("EMAIL ERROR:", error);
+    console.log("DELETE ERROR:", error);
     alert(error?.message || JSON.stringify(error));
+
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerText = "Delete";
+    }
   }
 }
