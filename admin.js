@@ -65,7 +65,7 @@ Delete
 
 async function confirmOrder(id){
 
-await fetch(
+const res = await fetch(
 `${SUPABASE_URL}/rest/v1/orders?id=eq.${id}`,
 {
 method:"PATCH",
@@ -80,6 +80,15 @@ status:"confirmed"
 }
 );
 
+const result = await res.text();
+
+alert(
+"PATCH Status: " +
+res.status +
+"\n" +
+result
+);
+
 loadOrders();
 
 }
@@ -88,7 +97,7 @@ async function deleteOrder(id){
 
 if(!confirm("Delete this order?")) return;
 
-await fetch(
+const res = await fetch(
 `${SUPABASE_URL}/rest/v1/orders?id=eq.${id}`,
 {
 method:"DELETE",
@@ -97,6 +106,15 @@ apikey: API_KEY,
 Authorization:`Bearer ${API_KEY}`
 }
 }
+);
+
+const result = await res.text();
+
+alert(
+"DELETE Status: " +
+res.status +
+"\n" +
+result
 );
 
 loadOrders();
