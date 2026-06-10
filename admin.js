@@ -4,16 +4,18 @@ const SUPABASE_URL =
 const API_KEY =
 "sb_publishable_SHJBzoX8F4ahjDtoW_G9ng_C4mF6txi";
 
+emailjs.init("QT7Y3j-Cx9P0acoWL");
+
 loadOrders();
 
 async function loadOrders() {
 
 const res = await fetch(
-`${SUPABASE_URL}/rest/v1/orders?select=*&order=id.desc`,
+"${SUPABASE_URL}/rest/v1/orders?select=*&order=id.desc",
 {
 headers:{
 apikey: API_KEY,
-Authorization: `Bearer ${API_KEY}`
+Authorization: "Bearer ${API_KEY}"
 }
 }
 );
@@ -29,21 +31,7 @@ orders.forEach(order => {
 
 container.innerHTML += `
 
-<div class="order">
-
-<h3>${order.customer_name}</h3>
-
-<p>${order.customer_phone}</p>
-
-<p>${order.customer_address}</p>
-
-<p>${order.products}</p>
-
-<p>${order.total} EGP</p>
-
-<p>Status: ${order.status || "pending"}</p>
-
-<button
+<div class="order"><h3>${order.customer_name}</h3><p>${order.customer_phone}</p><p>${order.customer_address}</p><p>${order.products}</p><p>${order.total} EGP</p><button
 class="confirm"
 onclick="confirmOrder(${order.id})">
 Confirm
@@ -55,9 +43,7 @@ onclick="deleteOrder(${order.id})">
 Delete
 </button>
 
-</div>
-
-`;
+</div>`;
 
 });
 
@@ -65,31 +51,42 @@ Delete
 
 async function confirmOrder(id){
 
-const res = await fetch(
-`${SUPABASE_URL}/rest/v1/orders?id=eq.${id}`,
+try{
+
+const orderRes = await fetch(
+"${SUPABASE_URL}/rest/v1/orders?id=eq.${id}&select=*",
 {
-method:"PATCH",
 headers:{
-"Content-Type":"application/json",
 apikey: API_KEY,
-Authorization:`Bearer ${API_KEY}`
-},
-body:JSON.stringify({
-status:"confirmed"
-})
+Authorization:"Bearer ${API_KEY}"
+}
 }
 );
 
-const result = await res.text();
+const orderData = await orderRes.json();
 
-alert(
-"PATCH Status: " +
-res.status +
-"\n" +
-result
+const order = orderData[0];
+
+await emailjs.send(
+"service_d4eyvig",
+"template_7xn81bb",
+{
+customer_name: order.customer_name,
+customer_email: order.customer_email,
+customer_phone: order.customer_phone,
+total: order.total
+}
 );
 
-loadOrders();
+alert("Confirmation Email Sent");
+
+}catch(error){
+
+console.log(error);
+
+alert("Email Send Error");
+
+}
 
 }
 
@@ -97,26 +94,52 @@ async function deleteOrder(id){
 
 if(!confirm("Delete this order?")) return;
 
-const res = await fetch(
-`${SUPABASE_URL}/rest/v1/orders?id=eq.${id}`,
+try{
+
+const orderRes = await fetch(
+"${SUPABASE_URL}/rest/v1/orders?id=eq.${id}&select=*",
+{
+headers:{
+apikey: API_KEY,
+Authorization:"Bearer ${API_KEY}"
+}
+}
+);
+
+const orderData = await orderRes.json();
+
+const order = orderData[0];
+
+await emailjs.send(
+"service_d4eyvig",
+"template_9lhv397",
+{
+customer_name: order.customer_name,
+customer_email: order.customer_email
+}
+);
+
+await fetch(
+"${SUPABASE_URL}/rest/v1/orders?id=eq.${id}",
 {
 method:"DELETE",
 headers:{
 apikey: API_KEY,
-Authorization:`Bearer ${API_KEY}`
+Authorization:"Bearer ${API_KEY}"
 }
 }
 );
 
-const result = await res.text();
-
-alert(
-"DELETE Status: " +
-res.status +
-"\n" +
-result
-);
+alert("Order Deleted");
 
 loadOrders();
+
+}catch(error){
+
+console.log(error);
+
+alert("Delete Error");
+
+}
 
 }
