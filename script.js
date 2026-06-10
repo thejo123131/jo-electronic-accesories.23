@@ -580,7 +580,21 @@ status:"pending"
 );
 
 /* إرسال Email */
-
+emailjs.send(
+"service_d4eyvig",
+"template_7xn81bb",
+{
+customer_name:"Test",
+customer_email:"test@test.com",
+customer_phone:"123",
+customer_address:"Test",
+payment_method:"Cash",
+products:"Test Product",
+total:"100"
+}
+)
+.then(res => console.log(res))
+.catch(err => console.log(err));
 await emailjs.send(
 "service_d4eyvig",
 "template_7xn81bb",
