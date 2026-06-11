@@ -192,7 +192,7 @@ category:"Cables"
 id:24,
 name:"4 In 1 Spring Cable 65W",
 price:99,
-image:"24.jpg",
+image:"25.jpg",
 category:"Cables"
 }
 
