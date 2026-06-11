@@ -80,7 +80,10 @@ async function loadOrders() {
     if (container) {
       container.innerHTML =
         `<p style="color:red;">Failed to load orders</p>`;
-    }/* =========================
+    }
+  }
+}
+/* =========================
    CONFIRM ORDER
 ========================= */
 
@@ -158,6 +161,7 @@ async function confirmOrder(id, btn) {
 
   } catch (error) {
     console.log("EMAIL ERROR:", error);
+
     alert(
       error?.message ||
       JSON.stringify(error)
@@ -168,7 +172,7 @@ async function confirmOrder(id, btn) {
     btn.innerText = "Confirm";
   }
 }
-    /* =========================
+/* =========================
    DELETE ORDER
 ========================= */
 
@@ -255,7 +259,5 @@ async function deleteOrder(id, btn) {
       btn.disabled = false;
       btn.innerText = "Delete";
     }
-  }
-}
   }
 }
